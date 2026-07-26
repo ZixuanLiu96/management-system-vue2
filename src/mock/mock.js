@@ -135,3 +135,13 @@ Mock.mock("http://localhost:8080/menu", "get", () => {
     data: menuList,
   };
 });
+
+//入职日期接口
+Mock.mock("http://localhost:8080/in", "get", () => {
+  return {
+    code: 200,
+    success: true,
+    message: "请求成功",
+    time: "2020-07-01 00:00:00",
+  };
+});

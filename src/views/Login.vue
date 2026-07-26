@@ -73,9 +73,10 @@ export default {
           this.loading = true;
           // 用自定义的axios
           post("/login", this.formData)
-            .then((res) => {
-              console.log("22222", res);
-              sessionStorage.setItem("token", res.token);
+            .then(({ token, nickname }) => {
+              // console.log("22222", res);
+              sessionStorage.setItem("token", token);
+              sessionStorage.setItem("nickname", nickname);
               setTimeout(() => {
                 this.$router.push("/");
               }, 1000);
