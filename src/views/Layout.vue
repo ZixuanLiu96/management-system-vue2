@@ -11,7 +11,7 @@
         <el-main>
           <router-view></router-view>
         </el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer>京ICP备888888888888号 京公安网备123456号</el-footer>
       </el-container>
     </el-container>
   </div>
@@ -41,5 +41,15 @@ export default {
   .el-header {
     padding: 0;
   }
+}
+
+.el-main {
+  height: 80vh;
+}
+
+.el-footer {
+  text-align: center;
+  font-size: 12px;
+  padding-top: 20px;
 }
 </style>

@@ -22,3 +22,11 @@ a {
 .clear {
   clear: both;
 }
+
+.mt {
+  margin-top: 10px;
+}
+
+.flex {
+  display: flex;
+}

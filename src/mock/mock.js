@@ -145,3 +145,81 @@ Mock.mock("http://localhost:8080/in", "get", () => {
     time: "2020-07-01 00:00:00",
   };
 });
+
+//折线图图表接口
+Mock.mock("http://localhost:8080/line", "get", () => {
+  return {
+    code: 200,
+    success: true,
+    message: "请求成功",
+    data: {
+      "22-01": 30,
+      "22-02": 84,
+      "22-03": 56,
+      "22-04": 47,
+      "22-05": 84,
+      "22-06": 61,
+      "22-07": 90,
+    },
+  };
+});
+
+//订单管理-订单列表
+Mock.mock("http://localhost:8080/orderList", "post", (req) => {
+  const { page, pageSize, keyword } = JSON.parse(req.body);
+  // console.log("接口接收到参数:", page, pageSize, keyword);
+  return {
+    code: 200,
+    success: true,
+    message: "成功",
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          "id|+1": 10000, //订单号
+          "status|1": [1, 2, 3, 4], //订单状态 1待审核 2已审核 3审核通过 4审核拒绝
+          date: Mock.Random.date(), //下单时间
+          "name|1": [
+            "诺来科技有限公司",
+            "辉华股份有限公司",
+            "川聚物流有限公司",
+            "成越材料有限公司",
+            "聚博纺织有限公司",
+          ], //客户名称
+          start: Mock.Random.city(true), //起始城市
+          end: Mock.Random.city(true), //目的城市,
+          "cargo|1": ["日用品", "纺织品", "生鲜", "建材", "电器"], //货物名称
+          count: Mock.Random.integer(10, 200), //件数
+          "unit|1": ["方", "吨"], //单位
+          price: Mock.Random.integer(5000, 50000), //运费
+          "from|1": ["移动端", "pc端"],
+          "pay|1": [1, 2], //是否支付 1 已支付 2未支付
+        },
+      ],
+      total: 47,
+    }),
+  };
+});
+
+//订单管理-新建订单
+Mock.mock("http://localhost:8080/addOrder", "post", (req) => {
+  const { name, start, end, cargo, count, unit, price, from, pay } = JSON.parse(
+    req.body,
+  );
+  console.log(
+    "新建订单接口收到参数:",
+    name,
+    start,
+    end,
+    cargo,
+    count,
+    unit,
+    price,
+    from,
+    pay,
+  );
+  return {
+    code: 200,
+    success: true,
+    message: "新建成功",
+  };
+});

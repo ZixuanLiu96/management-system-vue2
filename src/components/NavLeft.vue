@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3 class="title">邦达国际物流平台</h3>
-    <el-menu background-color="#001529" text-color="#fff">
+    <el-menu background-color="#001529" text-color="#fff" :router="true">
       <menu-vue
         v-for="item in menuData"
         :key="item.name"
@@ -27,7 +27,7 @@ export default {
     async getMenu() {
       const { data } = await get("/menu");
       this.menuData = data;
-      console.log(data);
+      // console.log(data);
     },
   },
   components: { MenuVue },
