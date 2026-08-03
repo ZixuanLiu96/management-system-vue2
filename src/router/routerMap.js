@@ -36,6 +36,13 @@ const routes = [
         //将面包屑菜单写在这，便于之后集中渲染
         meta: { bread: ["运单管理", "运单录入"] },
       },
+      {
+        path: "/waybill/list/detail",
+        name: "waybill_list_detail",
+        component: () => import("../views/waybill/WayBillDetail.vue"),
+        //将面包屑菜单写在这，便于之后集中渲染
+        meta: { bread: ["运单管理", "运单列表", "运单详情"] },
+      },
     ],
   },
   {

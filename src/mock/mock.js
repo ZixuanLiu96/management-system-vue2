@@ -223,3 +223,50 @@ Mock.mock("http://localhost:8080/addOrder", "post", (req) => {
     message: "新建成功",
   };
 });
+
+//运单管理-运单列表
+Mock.mock("http://localhost:8080/waybillList", "post", (req) => {
+  const { page, pageSize, waybillNo, name, startDate, endDate, status } =
+    JSON.parse(req.body);
+  console.log(
+    "服务端接收到参数",
+    page,
+    pageSize,
+    waybillNo,
+    name,
+    startDate,
+    endDate,
+    status,
+  );
+  return {
+    code: 200,
+    success: true,
+    message: "成功",
+    data: Mock.mock({
+      [`list|${pageSize}`]: [
+        {
+          "no|+1": 10000, //订单号
+          date: Mock.Random.date(), //下单时间
+          "name|1": [
+            "诺来科技有限公司",
+            "辉华股份有限公司",
+            "川聚物流有限公司",
+            "成越材料有限公司",
+            "聚博纺织有限公司",
+          ], //客户名称
+          cargo: ["日用品", "纺织品", "生鲜", "建材", "电器"], //货物名称
+          count: Mock.Random.integer(10, 200), //件数
+          start: Mock.Random.city(true), //起始城市
+          end: Mock.Random.city(true), //目的城市,
+          price: Mock.Random.integer(5000, 50000), //运费
+          "needRecive|1": [1, 2], //需要接货 1需要 2不需要
+          "plateNumber|1": ["京A12345", "苏C66666", "鲁B45678"], //车牌号
+          driver: Mock.Random.cname(),
+          "tel|1": [18888888888, 15577896554, 15789654785, 13698745269],
+          "percent|1": [37, 22, 89, 65, 80, 74, 56],
+        },
+      ],
+      total: 47,
+    }),
+  };
+});
