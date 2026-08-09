@@ -27,7 +27,7 @@ const routes = [
         name: "waybill_list",
         component: () => import("../views/waybill/WayBillList.vue"),
         //将面包屑菜单写在这，便于之后集中渲染
-        meta: { bread: ["运单管理", "运单列表"] },
+        meta: { bread: ["运单管理", "运单列表"], keepAlive: true },
       },
       {
         path: "/waybill/in",
@@ -43,12 +43,22 @@ const routes = [
         //将面包屑菜单写在这，便于之后集中渲染
         meta: { bread: ["运单管理", "运单列表", "运单详情"] },
       },
+      {
+        path: "/customer",
+        name: "customer",
+        component: () => import("../views/Customer.vue"),
+      },
     ],
   },
   {
     path: "/login",
     name: "login",
     component: () => import("../views/Login.vue"),
+  },
+  {
+    path: "*",
+    name: "not_found",
+    component: () => import("../views/NotFound.vue"),
   },
 ];
 

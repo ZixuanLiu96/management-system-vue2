@@ -9,7 +9,10 @@
           <top-header></top-header>
         </el-header>
         <el-main>
-          <router-view></router-view>
+          <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
         </el-main>
         <el-footer>京ICP备888888888888号 京公安网备123456号</el-footer>
       </el-container>

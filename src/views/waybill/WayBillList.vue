@@ -28,7 +28,7 @@
         ></el-col>
         <el-col :span="6" style="text-align: right"
           ><el-button type="primary" @click="loadData">查询</el-button
-          ><el-button type="primary">重置</el-button></el-col
+          ><el-button type="primary" @click="reset">重置</el-button></el-col
         >
       </el-row>
     </el-card>
@@ -110,7 +110,7 @@ export default {
   data() {
     return {
       loading: false,
-      date: "",
+      date: [],
       params: {
         waybillNo: "",
         name: "",
@@ -125,12 +125,30 @@ export default {
   created() {
     this.loadData();
   },
+  // 导航守卫， 离开页面的时候，清缓存
+  beforeRouteLeave(to, from, next) {
+    if (to.path !== "/waybill/list/detail") {
+      this.clearLoad();
+    }
+    next();
+  },
   methods: {
+    reset() {
+      this.date = [];
+      this.params = {
+        waybillNo: "",
+        name: "",
+        page: 1,
+        pageSize: 10,
+        status: 1,
+      };
+      this.loadData();
+    },
     async loadData() {
       // const startDate = moment(this.date[0]).format("YYYY-MM-DD");
       // const endDate = moment(this.date[1]).format("YYYY-MM-DD");
-      const startDate = this.date ? timeTransfer(this.date[0]) : "";
-      const endDate = this.date ? timeTransfer(this.date[1]) : "";
+      const startDate = this.date.length ? timeTransfer(this.date[0]) : "";
+      const endDate = this.date.length ? timeTransfer(this.date[1]) : "";
       this.loading = true;
       const {
         data: { list, total },
@@ -156,6 +174,35 @@ export default {
     },
     jump() {
       this.$router.push("/waybill/list/detail");
+    },
+    clearLoad() {
+      let Vnode = this.$vnode;
+      let parentVnode = Vnode && Vnode.parent;
+      if (
+        parentVnode &&
+        parentVnode.componentInstance &&
+        parentVnode.componentInstance.cache
+      ) {
+        var key =
+          Vnode.key == null
+            ? Vnode.componentOptions.Ctor.cid +
+              (Vnode.componentOptions.tag
+                ? `::${Vnode.componentOptions.tag}`
+                : "")
+            : Vnode.key;
+        var cache = parentVnode.componentInstance.cache;
+        var keys = parentVnode.componentInstance.keys;
+        if (cache[key]) {
+          this.$destroy();
+          if (keys.length) {
+            var index = keys.indexOf(key);
+            if (index > -1) {
+              keys.splice(index, 1);
+            }
+          }
+          cache[key] = null;
+        }
+      }
     },
   },
 };
