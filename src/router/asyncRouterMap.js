@@ -4,13 +4,19 @@ export default [
     path: "/attendance",
     name: "attendance",
     component: () => import("../views/authViews/Attendance.vue"),
-    meta: ["boss", "manager"],
+    meta: { auth: ["boss", "manager"] },
   },
   {
     // 工资页面
     path: "/salary",
     name: "salary",
     component: () => import("../views/authViews/Salary.vue"),
-    meta: ["boss"],
+    meta: { auth: ["boss"] },
+  },
+  {
+    path: "*",
+    name: "not_found",
+    component: () => import("../views/NotFound.vue"),
+    meta: { auth: ["boss", "manager", "user"] },
   },
 ];

@@ -13,6 +13,7 @@ Mock.mock("http://localhost:8080/login", "post", (req) => {
       message: "登录成功",
       nickname: "Dave",
       token: "bdhsgcikne2vsajgausr3",
+      role: "boss",
     };
   } else {
     return {
@@ -124,6 +125,16 @@ const menuList = [
     name: "个人中心",
     icon: "el-icon-chat-dot-square",
     url: "/personal",
+  },
+  {
+    name: "考勤页面",
+    icon: "el-icon-chat-dot-square",
+    url: "/attendance",
+  },
+  {
+    name: "工资详情",
+    icon: "el-icon-chat-dot-square",
+    url: "/salary",
   },
 ];
 //返回菜单的接口
@@ -268,5 +279,15 @@ Mock.mock("http://localhost:8080/waybillList", "post", (req) => {
       ],
       total: 47,
     }),
+  };
+});
+
+//根据token获取权限
+Mock.mock("http://localhost:8080/getRole", "get", () => {
+  return {
+    code: 200,
+    success: true,
+    message: "成功",
+    role: "boss",
   };
 });

@@ -37,6 +37,7 @@
 
 <script>
 import { post } from "../utils/http";
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -66,6 +67,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["setRole"]),
     login() {
       this.$refs.ruleForm.validate((valid) => {
         //验证，validate方法的第一个参数是个布尔值，第二个参数是表单的具体信息对象
@@ -73,10 +75,12 @@ export default {
           this.loading = true;
           // 用自定义的axios
           post("/login", this.formData)
-            .then(({ token, nickname }) => {
+            .then(({ token, nickname, role }) => {
               // console.log("22222", res);
               sessionStorage.setItem("token", token);
               sessionStorage.setItem("nickname", nickname);
+              //把role数据存在vuex里面了
+              this.setRole(role);
               setTimeout(() => {
                 this.$router.push("/");
               }, 1000);
