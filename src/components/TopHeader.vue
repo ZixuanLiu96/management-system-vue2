@@ -3,15 +3,15 @@
     <p class="text">
       今天是您在阿里的 <span>{{ getDays }}</span> 天
     </p>
-    <el-dropdown>
+    <el-dropdown @command="handleDropdown">
       <span class="el-dropdown-link">
         您好，{{ nickname }}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>个人中心</el-dropdown-item>
-        <el-dropdown-item>修改密码</el-dropdown-item>
-        <el-dropdown-item>退出登录</el-dropdown-item>
+        <el-dropdown-item command="personal">个人中心</el-dropdown-item>
+        <el-dropdown-item command="editPassword">修改密码</el-dropdown-item>
+        <el-dropdown-item command="exit">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -34,6 +34,16 @@ export default {
       const { time } = await get("/in");
       // console.log(time);
       this.time = time;
+    },
+    handleDropdown(command) {
+      if (command == "exit") {
+        sessionStorage.clear();
+        setTimeout(() => {
+          this.$router.push("/login");
+        }, 1000);
+      } else if (command == "personal") {
+        this.$router.push("/personal");
+      }
     },
   },
   computed: {
